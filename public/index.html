@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vulnerability Aggregator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Page Header -->
+    <header>
+        <h1>Vulnerability Aggregator</h1>
+        <p>Stay updated on the latest security vulnerabilities from trusted sources</p>
+    </header>
+
+    <!-- Floating Subscribe Form -->
+    <div id="subscribe-container">
+        <h3>Subscribe for Alerts</h3>
+        <input type="email" id="floating-email" placeholder="Enter your email">
+        <button onclick="subscribeUser('floating-email')">Subscribe</button>
+    </div>
+
+    <!-- Main Content -->
+    <div id="news-container"></div>
+
+    <!-- Footer -->
+    <footer>
+        <div>
+            <h3>Subscribe for Alerts</h3>
+            <input type="email" id="footer-email" placeholder="Enter your email">
+            <button onclick="subscribeUser('footer-email')">Subscribe</button>
+        </div>
+        <p>&copy; 2025 Vulnerability Aggregator. All rights reserved.</p>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

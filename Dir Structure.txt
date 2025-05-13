@@ -1,0 +1,15 @@
+// Directory Structure:
+// 📁 public
+// └── index.html
+// └── styles.css
+// └── main.js
+// 📁 routes
+// └── news.js
+// └── subscribe.js
+// 📁 services
+// └── newsFetcher.js
+// └── emailService.js
+// 📁 utils
+// └── logger.js
+// └── sanitizer.js
+// .env
