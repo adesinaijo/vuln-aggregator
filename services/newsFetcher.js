@@ -161,29 +161,40 @@ async function fetchAllNews(keyword) {
             fetchCIRCLNews()
         ]);
 
-        // Merge all news
-        let allNews = [...newsAPI, ...nvdNews, ...mitreNews, ...hackerNews, ...bleepingComputer, ...circlNews];
-        allNews = deduplicateNews(allNews);
+        // Merge and deduplicate fresh feed data
+        let freshNews = [...newsAPI, ...nvdNews, ...mitreNews, ...hackerNews, ...bleepingComputer, ...circlNews];
+        freshNews = deduplicateNews(freshNews);
 
-        // Filter out previously sent vulnerabilities
-        const unsentNews = [];
-        for (const item of allNews) {
+        // Save new items to DB (for email alert tracking) but don't filter display by it
+        const newItems = [];
+        for (const item of freshNews) {
             const exists = await Vulnerability.findOne({ id: item.id });
             if (!exists) {
-                unsentNews.push(item);
+                newItems.push(item);
             }
         }
-
-        // Save unsent news to the database
-        if (unsentNews.length > 0) {
-            await Vulnerability.insertMany(unsentNews, { ordered: false });
+        if (newItems.length > 0) {
+            await Vulnerability.insertMany(newItems, { ordered: false });
         }
 
-        // Apply keyword filter
-        const filteredNews = filterNewsByKeyword(unsentNews, keyword);
+        // Always return ALL items from the database for display
+        // This ensures the page is always populated even on reload
+        const query = keyword
+            ? {
+                $or: [
+                    { title: { $regex: keyword, $options: 'i' } },
+                    { description: { $regex: keyword, $options: 'i' } }
+                ]
+              }
+            : {};
 
-        // Sort by date
-        return filteredNews.sort((a, b) => new Date(b.publishedDate) - new Date(a.publishedDate));
+        const allStored = await Vulnerability.find(query)
+            .sort({ publishedDate: -1 })
+            .limit(50)
+            .lean();
+
+        return allStored;
+
     } catch (error) {
         console.error("Error fetching all news:", error.message);
         throw new Error("Failed to fetch all news.");
