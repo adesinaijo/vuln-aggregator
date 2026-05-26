@@ -1,15 +1,18 @@
-// Directory Structure:
-// 📁 public
-// └── index.html
-// └── styles.css
-// └── main.js
-// 📁 routes
-// └── news.js
-// └── subscribe.js
-// 📁 services
-// └── newsFetcher.js
-// └── emailService.js
-// 📁 utils
-// └── logger.js
-// └── sanitizer.js
-// .env
+vuln-aggregator/
+├── models/
+│   ├── vulnerability.js          # Mongoose model for vulnerability tracking
+│   └── subscriber.js             # Mongoose model for email subscribers
+├── routes/
+│   ├── news.js                   # API routes for news fetching
+│   └── subscribe.js              # API routes for subscriber management
+├── services/
+│   ├── newsFetcher.js            # Fetches data from various news sources
+│   └── emailService.js           # Handles email notifications
+├── public/
+│   ├── index.html                # Main frontend HTML
+│   ├── style.css                 # Main frontend styles
+│   └── main.js                   # Main frontend logic
+├── .env                          # Environment variables
+├── server.js                     # Main server file
+├── db.js                         # Database connection logic
+└── README.md                     # Project documentation (this file)
